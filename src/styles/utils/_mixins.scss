@@ -1,0 +1,11 @@
+@mixin main () {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@mixin label ($display) {
+    display: $display;
+    margin-top: 1rem;
+    margin-bottom: 10px;
+}

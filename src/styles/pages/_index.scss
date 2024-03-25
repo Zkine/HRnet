@@ -1,0 +1,25 @@
+.main_index {
+    @include main;
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__div {
+        margin: 10px 0 10px 0;
+    }
+
+    &__label {
+        @include label (block);
+    }
+
+    &__select {
+        @include label (block);
+        cursor: pointer;
+    }
+
+    &__btn {
+        margin: auto;
+    }
+}

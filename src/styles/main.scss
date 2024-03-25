@@ -1,3 +1,8 @@
 @import "node_modules/normalize-scss/sass/normalize/import-now";
-@import "./base/police";
 @import "./base/box-sizing";
+@import "./base/police";
+@import "./utils/mixins";
+@import "./components/header";
+@import "./components/calendar";
+@import "./pages/index";
+@import "./pages/employee-list";

@@ -1,0 +1,17 @@
+.main_list {
+    @include main;
+
+    &__div_show {
+        display: flex;
+        justify-content: space-between;
+        width: 50vw;
+    }
+
+    &__label {
+        @include label(inline-flex);
+    }
+
+    &__select {
+        @include label(inline-flex);
+    }
+}
