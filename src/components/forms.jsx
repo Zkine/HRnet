@@ -1,23 +1,28 @@
+import { forwardRef } from "react";
 import PropTypes from "prop-types";
 
-export default function Forms({
-  htmlFor,
-  className,
-  children,
-  type,
-  name,
-  id,
-  value,
-  onFocus,
-  onChange,
-  onBlur,
-}) {
+const Forms = forwardRef(function Forms(
+  {
+    htmlFor,
+    className,
+    children,
+    type,
+    name,
+    id,
+    value,
+    onFocus,
+    onChange,
+    onBlur,
+  },
+  ref
+) {
   return (
     <>
       <label htmlFor={htmlFor} className={className}>
         {children}
       </label>
       <input
+        ref={ref}
         type={type}
         name={name}
         id={id}
@@ -28,7 +33,9 @@ export default function Forms({
       />
     </>
   );
-}
+});
+
+export default Forms;
 
 Forms.propTypes = {
   htmlFor: PropTypes.string.isRequired,
@@ -37,7 +44,7 @@ Forms.propTypes = {
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  value: PropTypes.instanceOf(Date),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
   onFocus: PropTypes.func,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,

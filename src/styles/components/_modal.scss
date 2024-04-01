@@ -1,0 +1,44 @@
+.ReactModal__Overlay {
+    background-color: rgba(0, 0, 0, 0.75) !important;
+}
+
+.modal {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    width: 90%;
+    max-width: 500px;
+    height: 48px;
+    background-color: #fff;
+    margin-right: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: baseline;
+    padding-left: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #000;
+
+    &__btn {
+        position: absolute;
+        top: -12.5px;
+        right: -12.5px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+
+        &::after {
+            content: "";
+            background: url('/src/assets/closeModal.webp') no-repeat;
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+
+        }
+    }
+}

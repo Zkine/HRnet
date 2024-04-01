@@ -3,11 +3,15 @@ import Header from "../components/header";
 import { Link } from "react-router-dom";
 import Forms from "../components/forms";
 import Select from "../components/select";
+import Table from "../components/table";
 import JsnData from "../data/datas.json";
+import { useStore } from "react-redux";
 
 export default function EmployeeList() {
+  const store = useStore();
   useEffect(() => {
     document.title = "HRnet - employee-list page";
+    console.log(store.getState().list);
   });
 
   return (
@@ -43,8 +47,8 @@ export default function EmployeeList() {
           </div>
         </section>
         <section>
-          <table>
-            <thead>
+          <Table />
+          {/* <thead>
               <tr>
                 <th>First Name</th>
                 <th>Last Name</th>
@@ -62,13 +66,13 @@ export default function EmployeeList() {
                 <td>No data available in table</td>
               </tr>
             </tbody>
-          </table>
+          </table> */}
         </section>
         <div>
           <p>Showing 0 to 0 of 0 entries</p>
           <div>
-            <button>Previous</button>
-            <button>Next</button>
+            <Link>Previous</Link>
+            <Link>Next</Link>
           </div>
           <Link to="/">Home</Link>
         </div>

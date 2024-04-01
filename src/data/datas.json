@@ -77,6 +77,17 @@
       { "id": "2SH", "children": "25" },
       { "id": "3SH", "children": "50" },
       { "id": "4SH", "children": "100" }
+    ],
+    "columnDefs": [
+      { "field": "first-name" },
+      { "field": "last-name" },
+      { "field": "start-date" },
+      { "field": "department" },
+      { "field": "date-of-birth" },
+      { "field": "street" },
+      { "field": "city" },
+      { "field": "state" },
+      { "field": "zip-code" }
     ]
   }
 ]
