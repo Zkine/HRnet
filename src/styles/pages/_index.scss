@@ -1,6 +1,10 @@
 .main_index {
     @include main;
 
+    &__h2 {
+        font-size: 1.5em;
+    }
+
     &__form {
         display: flex;
         flex-direction: column;

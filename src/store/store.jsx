@@ -1,6 +1,23 @@
 import { configureStore } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 
-let state = {
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage,
+};
+
+const state = {
   value: null,
   list: [],
 };
@@ -9,8 +26,6 @@ const reducer = (currentState, action) => {
   switch (action.type) {
     case "ADD_LISTE": {
       const userData = [...currentState.list, action.payload];
-      console.log(userData[0]);
-      console.log(state.list);
       return {
         ...currentState,
         list: userData,
@@ -21,7 +36,19 @@ const reducer = (currentState, action) => {
   }
 };
 
-export const store = configureStore({
-  preloadedState: state,
-  reducer,
-});
+const persistedReducer = persistReducer(persistConfig, reducer);
+
+export const exportDefaultStore = () => {
+  const store = configureStore({
+    preloadedState: state,
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
+  });
+  const persistor = persistStore(store);
+  return { store, persistor };
+};

@@ -1,4 +1,19 @@
 .table {
-    width: 700px;
+    width: 1224px;
     height: 500px;
+    margin: auto;
+}
+
+.ag-cell {
+    padding-left: 20px;
+    padding-right: 0;
+    white-space: normal;
+}
+
+.ag-cell:nth-child(6) {
+    padding-left: 0;
+}
+
+.ag-cell:nth-child(7) {
+    padding-left: 0;
 }

@@ -2,20 +2,24 @@ import { useEffect, useState, useRef } from "react";
 import Header from "../components/header";
 import { Link } from "react-router-dom";
 import Forms from "../components/forms";
-import Select from "../components/select";
+// import Select from "../components/select";
+import { Select } from "@zkine/react-select";
 import JsnData from "../data/datas.json";
-import Calendar from "react-calendar";
+import Calendar from "../components/calendar";
 import Modal from "../components/modal";
 import "react-calendar/dist/Calendar.css";
 import { useStore } from "react-redux";
 
 export default function Index() {
   const store = useStore();
-  const [Open, setIsOpen] = useState(false);
-  const [value, setValue] = useState("");
+  const [OpenBirth, setIsOpenBirth] = useState(false);
+  const [valueBirth, setValueBirth] = useState("");
+  const [OpenDay, setIsOpenDay] = useState(false);
+  const [valueDay, setValueDay] = useState("");
   const [modalIsOpen, setmodalIsOpen] = useState(false);
-  const formRef = useRef(null);
-  const calendarRef = useRef(null);
+  const formRefBirth = useRef(null);
+  const formRefDay = useRef(null);
+  // const [date, setDate] = useState(null);
 
   useEffect(() => {
     document.title = "HRnet - index page";
@@ -23,27 +27,30 @@ export default function Index() {
 
   function formatDate(e) {
     const date = new Date(e);
-    console.log(date);
-    return setValue(
-      new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }).format(date)
-    );
-  }
-
-  function openModal() {
-    setmodalIsOpen(true);
-  }
-
-  function closeModal() {
-    setmodalIsOpen(false);
+    if (OpenBirth) {
+      return setValueBirth(
+        new Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).format(date)
+      );
+    } else if (OpenDay) {
+      return setValueDay(
+        new Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).format(date)
+      );
+    }
   }
 
   function handleClickEvent() {
-    if (document.activeElement !== formRef.current) {
-      setIsOpen(false);
+    if (document.activeElement !== formRefBirth.current) {
+      setIsOpenBirth(false);
+    } else if (document.activeElement !== formRefDay.current) {
+      setIsOpenDay(false);
     }
   }
 
@@ -55,12 +62,31 @@ export default function Index() {
     store.dispatch({ type: "ADD_LISTE", payload: formJson });
   }
 
+  // function currentDate(e) {
+  //   // console.log(e);
+  //   // const date = new Date();
+  //   // const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+  //   // const firstDayOfTodaysMonth = firstDay.date(1).toDate();
+  //   const date = new Date(2017, 0, 1);
+  //   console.log(date);
+  //   console.log(calendarRef);
+  //   calendarRef.current.activeStartDate(date);
+  // }
+
+  function openModal() {
+    return setmodalIsOpen(true);
+  }
+
+  function closeModal() {
+    return setmodalIsOpen(false);
+  }
+
   return (
-    <div onClick={(e) => Open && handleClickEvent(e)}>
+    <div onClick={(e) => (OpenBirth || OpenDay) && handleClickEvent(e)}>
       <Header>HRnet</Header>
       <main className="main_index">
         <Link to="/employee-list">View Current Employees</Link>
-        <h2>Create Employee</h2>
+        <h2 className="main_index__h2">Create Employee</h2>
         <form onSubmit={handleUpdateList} className="main_index__form">
           <div className="main_index__div">
             <Forms
@@ -82,42 +108,71 @@ export default function Index() {
               Last Name
             </Forms>
             <Forms
-              ref={formRef}
+              ref={formRefBirth}
               htmlFor="date-of-birth"
               className="main_index__label"
               type="text"
               name="date-of-birth"
               id="date-of-birth"
-              value={value}
+              value={valueBirth}
               onFocus={(e) => {
-                e.stopPropagation(), setIsOpen(!Open);
+                e.stopPropagation(), setIsOpenBirth(!OpenBirth);
               }}
               onChange={(e) => formatDate(e.target.value)}
             >
               Date of Birth
             </Forms>
-            {Open ? (
+            {OpenBirth ? (
               <>
-                <div ref={calendarRef} onClick={(e) => e.stopPropagation()}>
-                  <Calendar
-                    locale="en-GB"
-                    onChange={(e) => {
-                      formatDate(e), setIsOpen(!Open);
+                <Calendar
+                  locale="en-GB"
+                  // onActiveStartDateChange={date}
+                  onChange={(e) => {
+                    formatDate(e), setIsOpenBirth(!OpenBirth);
+                  }}
+                />
+                {/* <button
+                    type="button"
+                    onClick={() => {
+                      const dateToSet = new Date();
+                      setDate(dateToSet);
                     }}
-                  />
-                </div>
-                {/* <button onClick={setValue(new Date(2017, 0, 1))}></button> */}
+                  ></button> */}
               </>
             ) : null}
             <Forms
+              ref={formRefDay}
               htmlFor="start-date"
               className="main_index__label"
               type="text"
               name="start-date"
               id="start-date"
+              value={valueDay}
+              onFocus={(e) => {
+                e.stopPropagation(), setIsOpenDay(!OpenDay);
+              }}
+              onChange={(e) => formatDate(e.target.value)}
             >
               Start Date
             </Forms>
+            {OpenDay ? (
+              <>
+                <Calendar
+                  locale="en-GB"
+                  // onActiveStartDateChange={date}
+                  onChange={(e) => {
+                    formatDate(e), setIsOpenDay(!OpenDay);
+                  }}
+                />
+                {/* <button
+                    type="button"
+                    onClick={() => {
+                      const dateToSet = new Date();
+                      setDate(dateToSet);
+                    }}
+                  ></button> */}
+              </>
+            ) : null}
           </div>
           <fieldset>
             <legend>Address</legend>
