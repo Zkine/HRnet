@@ -82,7 +82,7 @@ export default function Index() {
   }
 
   return (
-    <div onClick={(e) => (OpenBirth || OpenDay) && handleClickEvent(e)}>
+    <div onClick={(e) => (OpenBirth || OpenDay ? handleClickEvent(e) : null)}>
       <Header>HRnet</Header>
       <main className="main_index">
         <Link to="/employee-list">View Current Employees</Link>
