@@ -9,6 +9,7 @@ Currently, two official plugins are available:
 
 ## Test de performance Lighthouse
 
+- Installer les dépendances du projet : npm install
 - Créer un build du projet : npm run build
 - Installer les dépendances server : npm install -g serve
 - Lancer le serveur avec la commande : serve -s dist
