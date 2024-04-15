@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import Header from "../components/header";
 import { Link } from "react-router-dom";
 import Forms from "../components/forms";
-// import Select from "../components/select";
 import { Select } from "@zkine/react-select";
 import JsnData from "../data/datas.json";
 import Calendar from "../components/calendar";
@@ -19,7 +18,6 @@ export default function Index() {
   const [modalIsOpen, setmodalIsOpen] = useState(false);
   const formRefBirth = useRef(null);
   const formRefDay = useRef(null);
-  // const [date, setDate] = useState(null);
 
   useEffect(() => {
     document.title = "HRnet - index page";
@@ -47,9 +45,17 @@ export default function Index() {
   }
 
   function handleClickEvent() {
-    if (document.activeElement !== formRefBirth.current) {
+    if (
+      document.activeElement !== formRefBirth.current &&
+      document.activeElement !== formRefDay.current
+    ) {
       setIsOpenBirth(false);
-    } else if (document.activeElement !== formRefDay.current) {
+      setIsOpenDay(false);
+    } else if (
+      document.activeElement !== formRefDay.current &&
+      document.activeElement === formRefBirth.current
+    ) {
+      setIsOpenBirth(true);
       setIsOpenDay(false);
     }
   }
@@ -58,20 +64,8 @@ export default function Index() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson);
     store.dispatch({ type: "ADD_LISTE", payload: formJson });
   }
-
-  // function currentDate(e) {
-  //   // console.log(e);
-  //   // const date = new Date();
-  //   // const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-  //   // const firstDayOfTodaysMonth = firstDay.date(1).toDate();
-  //   const date = new Date(2017, 0, 1);
-  //   console.log(date);
-  //   console.log(calendarRef);
-  //   calendarRef.current.activeStartDate(date);
-  // }
 
   function openModal() {
     return setmodalIsOpen(true);
@@ -125,19 +119,10 @@ export default function Index() {
             {OpenBirth ? (
               <>
                 <Calendar
-                  locale="en-GB"
-                  // onActiveStartDateChange={date}
                   onChange={(e) => {
                     formatDate(e), setIsOpenBirth(!OpenBirth);
                   }}
                 />
-                {/* <button
-                    type="button"
-                    onClick={() => {
-                      const dateToSet = new Date();
-                      setDate(dateToSet);
-                    }}
-                  ></button> */}
               </>
             ) : null}
             <Forms
@@ -158,19 +143,10 @@ export default function Index() {
             {OpenDay ? (
               <>
                 <Calendar
-                  locale="en-GB"
-                  // onActiveStartDateChange={date}
                   onChange={(e) => {
                     formatDate(e), setIsOpenDay(!OpenDay);
                   }}
                 />
-                {/* <button
-                    type="button"
-                    onClick={() => {
-                      const dateToSet = new Date();
-                      setDate(dateToSet);
-                    }}
-                  ></button> */}
               </>
             ) : null}
           </div>

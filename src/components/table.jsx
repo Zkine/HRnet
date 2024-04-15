@@ -13,7 +13,6 @@ export default function Table() {
       return (e.field = e.field.replace("-", " ")), (e.minWidth = 120);
     } else if (
       e.field !== "department" &&
-      e.field !== "department" &&
       e.field !== "street" &&
       e.field !== "city" &&
       e.field !== "state"
