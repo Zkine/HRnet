@@ -9,7 +9,8 @@ Currently, two official plugins are available:
 
 ## Test de performance Lighthouse
 
-- installer les dépendance server : npm install -g serve
-- lancer le serveur avec la commande : serve -s dist
+- Créer un build du projet : npm run build
+- Installer les dépendances server : npm install -g serve
+- Lancer le serveur avec la commande : serve -s dist
 - L'application fonctionne désormais en mode production ! Allez sur http://localhost:3000/ (ou l'adresse mentionnée)
-- Se diriger vers l'application - clique droit puis inspecter - cliquer sur Lighthouse sur le panneau de la console et réaliser les tests
+- Se diriger vers l'application - clique droit puis inspecter - cliquer sur Lighthouse sur le panneau de la console puis réaliser les tests.
